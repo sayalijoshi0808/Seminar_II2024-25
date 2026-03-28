@@ -1,0 +1,63 @@
+import sys
+
+def solve():
+    input_data = sys.stdin.read().split()
+    idx = 0
+    
+    while idx < len(input_data):
+        N = int(input_data[idx])
+        idx += 1
+        if N == 0:
+            break
+        
+        while True:
+            first_val = int(input_data[idx])
+            if first_val == 0:
+                idx += 1
+                print() 
+                break
+            
+            target = [first_val]
+            for _ in range(N - 1):
+                idx += 1
+                target.append(int(input_data[idx]))
+            idx += 1
+            
+            stack = []
+            current_coach = 1
+            possible = True
+            
+            for coach_needed in target:
+                while current_coach <= N and (not stack or stack[-1] != coach_needed):
+                    stack.append(current_coach)
+                    current_coach += 1
+                
+                if stack and stack[-1] == coach_needed:
+                    stack.pop()
+                else:
+                    possible = False
+                    break
+            
+            if possible:
+                print("Yes")
+            else:
+                print("No")
+
+if __name__ == "__main__":
+    solve()
+
+INPUT:-
+5
+1 2 3 4 5
+5 4 1 2 3
+0
+6
+6 5 4 3 2 1
+0
+0
+
+Output
+Yes
+No
+
+Yes
